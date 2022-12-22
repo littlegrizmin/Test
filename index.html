@@ -2,11 +2,12 @@
 <html>
 <head>
 	<title>QR Code Generator</title>
-	<script src="/Test/qrcode.min.js"></script>
+	<script src="qrcode.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-	<input id="text" type="text" value="QR code text" style="width:80%" /><br />
+	<input id="text" type="text" value="https://hogangnono.com" style="width:80%" /><br />
+	<button id="generate-button">Generate QR code</button><br />
 	<div id="qrcode"></div>
 	
 	<script>
@@ -24,17 +25,8 @@
 			qrcode.makeCode(elText.value);
 		}
 	
-		makeCode();
-	
-		$("#text").
-			on("blur", function () {
-				makeCode();
-			}).
-			on("keydown", function (e) {
-				if (e.keyCode == 13) {
-					makeCode();
-				}
-			});
+		// Attach event listener to the Generate QR code button
+		document.getElementById("generate-button").addEventListener("click", makeCode);
 	</script>
 </body>
 </html>
