@@ -1,0 +1,47 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Code Generator</title>
+</head>
+<body>
+  <h1>QR Code Generator</h1>
+  <p>Enter the text you want to convert to a QR code:</p>
+  <input type="text" id="text-input">
+  <br>
+  <p>Upload a custom image (PNG format only):</p>
+  <input type="file" id="image-input" accept=".png">
+  <br>
+  <button onclick="generateQRCode()">Generate QR Code</button>
+  <br><br>
+  <canvas id="qr-code" width="150" height="150"></canvas>
+  <br>
+  <a id="download-link" download="qr-code.png">Download QR Code</a>
+
+  <script>
+    function generateQRCode() {
+      // Get the text and image input
+      var text = document.getElementById('text-input').value;
+      var imageInput = document.getElementById('image-input');
+      var image = imageInput.files[0];
+
+      // Create a new QR code using the qrcode.js library
+      var qrcode = new QRCode(document.getElementById('qr-code'), {
+        text: text,
+        width: 150,
+        height: 150,
+        // Include the custom image in the QR code
+        image: image
+      });
+
+      // Update the download link to point to the generated QR code image
+      var canvas = document.getElementById('qr-code');
+      var link = document.getElementById('download-link');
+      link.href = canvas.toDataURL();
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+</body>
+</html>
