@@ -21,25 +21,27 @@
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script>
-    function generateQRCode() {
-      // Get the text and image input
-      var text = document.getElementById('text-input').value;
-      var imageInput = document.getElementById('image-input');
-      var image = imageInput.files[0];
+    window.onload = function() {
+      function generateQRCode() {
+        // Get the text and image input
+        var text = document.getElementById('text-input').value;
+        var imageInput = document.getElementById('image-input');
+        var image = imageInput.files[0];
 
-      // Create a new QR code using the qrcode.js library
-      var qrcode = new QRCode(document.getElementById('qr-code'), {
-        text: text,
-        width: 150,
-        height: 150,
-        // Include the custom image in the QR code
-        image: image
-      });
+        // Create a new QR code using the qrcode.js library
+        var qrcode = new QRCode(document.getElementById('qr-code'), {
+          text: text,
+          width: 150,
+          height: 150,
+          // Include the custom image in the QR code
+          image: image
+        });
 
-      // Update the download link to point to the generated QR code image
-      var canvas = document.getElementById('qr-code');
-      var link = document.getElementById('download-link');
-      link.href = canvas.toDataURL();
+        // Update the download link to point to the generated QR code image
+        var canvas = document.getElementById('qr-code');
+        var link = document.getElementById('download-link');
+        link.href = canvas.toDataURL();
+      }
     }
   </script>
 </body>
