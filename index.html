@@ -13,7 +13,7 @@
   <p>Upload a custom image (PNG format only):</p>
   <input type="file" id="image-input" accept=".png">
   <br>
-  <button onclick="window.generateQRCode()">Generate QR Code</button>
+  <button onclick="generateQRCode()">Generate QR Code</button>
   <br><br>
   <canvas id="qr-code" width="150" height="150"></canvas>
   <br>
@@ -41,7 +41,6 @@
       var link = document.getElementById('download-link');
       link.href = canvas.toDataURL();
     }
-  }
-</script>
+  </script>
 </body>
 </html>
