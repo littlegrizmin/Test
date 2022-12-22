@@ -12,35 +12,36 @@
 <div id="qrcode"></div>
 
 <script>
-	var qrcode = new QRCode("qrcode");
+		var qrcode = new QRCode("qrcode");
 	
-	function makeCode () {		
-		var elText = document.getElementById("text");
-		var elFile = document.getElementById("file");
-		
-		if (!elText.value) {
-			alert("Input a text");
-			elText.focus();
-			return;
-		}
-		
-		if (elFile.files.length > 0) {
-			var file = elFile.files[0];
+		function makeCode () {		
+			var elText = document.getElementById("text");
+			var elFile = document.getElementById("file");
 			
-			if (file.type == "image/png") {
-				var reader = new FileReader();
-				
-				reader.onload = function (event) {
-					qrcode.setImage(event.target.result);
-					qrcode.makeCode(elText.value);
-				};
-				
-				reader.readAsDataURL(file);
-			} else {
-				alert("Please select a PNG image");
+			if (!elText.value) {
+				alert("Input a text");
+				elText.focus();
+				return;
 			}
-		} else {
-			qrcode.makeCode(elText.value);
+			
+			if (elFile.files.length > 0) {
+				var file = elFile.files[0];
+				
+				if (file.type == "image/png") {
+					var reader = new FileReader();
+					
+					reader.onload = function (event) {
+						qrcode.setImage(event.target.result);
+						qrcode.makeCode(elText.value);
+					};
+					
+					reader.readAsDataURL(file);
+				} else {
+					alert("Please select a PNG image");
+				}
+			} else {
+				qrcode.makeCode(elText.value);
+			}
 		}
 	
 		// Attach event listener to the Generate QR code button
