@@ -7,21 +7,39 @@
 </head>
 <body>
 	<input id="text" type="text" value="https://hogangnono.com" style="width:80%" /><br />
-	<button id="generate-button">Generate QR code</button><br />
-	<div id="qrcode"></div>
+<input id="file" type="file" accept="image/png" /><br />
+<button id="generate-button">Generate QR code</button><br />
+<div id="qrcode"></div>
+
+<script>
+	var qrcode = new QRCode("qrcode");
 	
-	<script>
-		var qrcode = new QRCode("qrcode");
-	
-		function makeCode () {		
-			var elText = document.getElementById("text");
+	function makeCode () {		
+		var elText = document.getElementById("text");
+		var elFile = document.getElementById("file");
+		
+		if (!elText.value) {
+			alert("Input a text");
+			elText.focus();
+			return;
+		}
+		
+		if (elFile.files.length > 0) {
+			var file = elFile.files[0];
 			
-			if (!elText.value) {
-				alert("Input a text");
-				elText.focus();
-				return;
+			if (file.type == "image/png") {
+				var reader = new FileReader();
+				
+				reader.onload = function (event) {
+					qrcode.setImage(event.target.result);
+					qrcode.makeCode(elText.value);
+				};
+				
+				reader.readAsDataURL(file);
+			} else {
+				alert("Please select a PNG image");
 			}
-			
+		} else {
 			qrcode.makeCode(elText.value);
 		}
 	
