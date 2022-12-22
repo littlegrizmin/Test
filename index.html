@@ -1,71 +1,39 @@
+<!DOCTYPE html>
 <html>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-  <head>
-    <title>New QR Code Generator</title>
-  </head>
-  <body>
-    <!-- Form for entering text to be encoded in the QR code -->
-    <form id="text-form">
-      <label for="text-input">Enter text to be encoded in the QR code:</label><br>
-      <input type="text" id="text-input"><br>
-      <input type="submit" value="Generate QR Code">
-    </form>
-
-    <!-- Form for uploading a PNG image to be incorporated into the QR code -->
-    <form id="image-form" enctype="multipart/form-data">
-      <label for="image-input">Select a PNG image to incorporate into the QR code:</label><br>
-      <input type="file" id="image-input" accept=".png"><br>
-      <input type="submit" value="Generate QR Code">
-    </form>
-
-    <!-- Div to display the generated QR code -->
-    <div id="qr-code"></div>
-
-    <!-- JavaScript for generating the QR code -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
-    <script>
-      // Add event listener to text form
-      document.getElementById('text-form').addEventListener('submit', function(event) {
-        // Prevent form submission
-        event.preventDefault();
-
-        // Get text input
-        var text = document.getElementById('text-input').value;
-
-        // Create QR code
-        var qr = new QRCode(document.getElementById('qr-code'), {
-          text: text,
-          width: 256,
-          height: 256
-        });
-      });
-
-      // Add event listener to image form
-      document.getElementById('image-form').addEventListener('submit', function(event) {
-        // Prevent form submission
-        event.preventDefault();
-
-        // Get image file
-        var file = document.getElementById('image-input').files[0];
-
-        // Create FileReader to read image file as data URL
-        var reader = new FileReader();
-        reader.onload = function(event) {
-          // Get data URL of image
-          var dataURL = event.target.result;
-
-          // Create QR code
-          var qr = new QRCode(document.getElementById('qr-code'), {
-            text: dataURL,
-            width: 256,
-            height: 256,
-            colorDark: '#000000',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
-          });
-        };
-        reader.readAsDataURL(file);
-      });
-    </script>
-  </body>
+<head>
+	<title>QR Code Generator</title>
+	<script src="qrcode.js"></script>
+</head>
+<body>
+	<input id="text" type="text" value="QR code text" style="width:80%" /><br />
+	<div id="qrcode"></div>
+	
+	<script>
+		var qrcode = new QRCode("qrcode");
+	
+		function makeCode () {		
+			var elText = document.getElementById("text");
+			
+			if (!elText.value) {
+				alert("Input a text");
+				elText.focus();
+				return;
+			}
+			
+			qrcode.makeCode(elText.value);
+		}
+	
+		makeCode();
+	
+		$("#text").
+			on("blur", function () {
+				makeCode();
+			}).
+			on("keydown", function (e) {
+				if (e.keyCode == 13) {
+					makeCode();
+				}
+			});
+	</script>
+</body>
 </html>
